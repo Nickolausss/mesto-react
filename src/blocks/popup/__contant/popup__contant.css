@@ -1,0 +1,10 @@
+.popup__contant {
+	width: 430px;
+	position: relative;
+}
+
+@media screen and (max-width: 618px) {
+	.popup__contant {
+		width: 282px;
+	}
+}

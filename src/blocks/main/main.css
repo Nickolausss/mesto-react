@@ -1,0 +1,10 @@
+.main {
+	box-sizing: border-box;
+	flex: 1;
+}
+
+@media screen and (max-width: 920px) {
+	.main {
+		padding: 0 19px;
+	}
+}
