@@ -68,24 +68,15 @@ class Api {
 		)
 	};
 
-	addLike(id) {
+	changeLikeCardStatus(id, status) {
+		const methodSwitch = status ? 'PUT' : 'DELETE';
 		return this._request(
 			`${this._baseUrl}/cards/${id}/likes`,
 			{
-				method: 'PUT',
+				method: methodSwitch,
 				headers: this._headers
 			}
-		)
-	};
-
-	deleteLike(id) {
-		return this._request(
-			`${this._baseUrl}/cards/${id}/likes`,
-			{
-				method: 'DELETE',
-				headers: this._headers
-			}
-		)
+		);
 	};
 
 	changeAvatar(inputValue) {
