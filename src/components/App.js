@@ -9,6 +9,7 @@ import Main from './Main';
 import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
+import EditProfilePopup from './EditProfilePopup';
 
 function App() {
   const [cards, setCards] = useState([]);
@@ -76,6 +77,17 @@ function App() {
       })
   };
 
+  function handleUpdateUser(data) {
+    api.editProfileInfo(data)
+      .then(dataUser => {
+        setCurrentUser(dataUser);
+        closeAllPopups();
+      })
+      .catch(err => {
+        console.log(`Ошибка в методе editProfileInfo: ${err}`);
+      })
+  };
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
@@ -94,22 +106,11 @@ function App() {
           onCardDelete={handleCardDelete}
         />
         <Footer />
-        <PopupWithForm
-          title="Редактировать профиль"
-          name="profile-edit"
-          buttonText="Сохранить"
+        <EditProfilePopup
           isOpen={isEditProfilePopupOpen && 'popup_opened'}
           onClose={closeAllPopups}
-        >
-          (
-          <input id="name-input" type="text" name="name" placeholder="Ваше имя" required
-            className="popup__item popup__item_input_name" minLength="2" maxLength="40" />
-          <span className="name-input-error popup__item-error"></span>
-          <input id="description-input" type="text" name="description" placeholder="Род деятельности" required
-            className="popup__item popup__item_input_description" minLength="2" maxLength="200" />
-          <span className="description-input-error popup__item-error"></span>
-          )
-        </PopupWithForm>
+          onUpdateUser={handleUpdateUser}
+        />
         <PopupWithForm
           title="Новое место"
           name="add-card"
