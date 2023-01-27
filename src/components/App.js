@@ -10,6 +10,7 @@ import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup';
 
 function App() {
   const [cards, setCards] = useState([]);
@@ -88,6 +89,17 @@ function App() {
       })
   };
 
+  function handleUpdateAvatar(data) {
+    api.changeAvatar(data)
+      .then(dataUser => {
+        setCurrentUser(dataUser);
+        closeAllPopups();
+      })
+      .catch(err => {
+        console.log(`Ошибка в методе changeAvatar: ${err}`);
+      })
+  };
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
@@ -127,19 +139,11 @@ function App() {
           <span className="place-input-error popup__item-error"></span>
           )
         </PopupWithForm>
-        <PopupWithForm
-          title="Обновить аватар"
-          name="change-avatar"
-          buttonText="Сохранить"
+        <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen && 'popup_opened'}
           onClose={closeAllPopups}
-        >
-          (
-          <input id="avatar-input" type="url" name="avatar" placeholder="Ссылка на новый аватар" required
-            className="popup__item popup__item_input_avatar" />
-          <span className="avatar-input-error popup__item-error"></span>
-          )
-        </PopupWithForm>
+          onUpdateAvatar={handleUpdateAvatar}
+        />
         <PopupWithForm
           title="Вы уверены?"
           name="confir-delete"
