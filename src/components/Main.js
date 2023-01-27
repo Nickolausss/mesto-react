@@ -1,24 +1,11 @@
 import React from 'react';
-import { useEffect, useContext } from 'react';
-
-import { api } from '../utils/api.js';
+import { useContext } from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 
 import Card from './Card';
 
 function Main(props) {
 	const currentUser = useContext(CurrentUserContext);
-
-	useEffect(() => {
-		api.getInitialCards()
-			.then((cards) => {
-				console.log(cards);
-				props.cardsStateChange(cards);
-			})
-			.catch(error => {
-				console.log(`Ошибка в методе: getInitialCards: ${error}`);
-			})
-	}, []);
 
 	return (
 		<main className="main">
