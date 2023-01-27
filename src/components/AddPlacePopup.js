@@ -2,13 +2,15 @@ import { useRef } from 'react';
 import PopupWithForm from './PopupWithForm';
 
 function AddPlacePopup(props) {
+	const { isOpen, onClose, onAddPlace } = props;
+
 	const inputTitle = useRef();
 	const inputPlace = useRef();
 
 	function handleSubmit(e) {
 		e.preventDefault();
 
-		props.onAddPlace({
+		onAddPlace({
 			name: inputTitle.current.value,
 			link: inputPlace.current.value
 		})
@@ -19,8 +21,8 @@ function AddPlacePopup(props) {
 			title="Новое место"
 			name="add-card"
 			buttonText="Сохранить"
-			isOpen={props.isOpen}
-			onClose={props.onClose}
+			isOpen={isOpen}
+			onClose={onClose}
 			onSubmit={handleSubmit}
 		>
 			(
