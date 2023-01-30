@@ -2,13 +2,14 @@ import { useRef } from 'react';
 import PopupWithForm from './PopupWithForm';
 
 function AddPlacePopup(props) {
-	const { isOpen, onClose, onAddPlace } = props;
+	const { isOpen, onClose, onAddPlace, onChangeSavingButton, isLoading } = props;
 
 	const inputTitle = useRef();
 	const inputPlace = useRef();
 
 	function handleSubmit(e) {
 		e.preventDefault();
+		onChangeSavingButton(true);
 
 		onAddPlace({
 			name: inputTitle.current.value,
@@ -24,6 +25,7 @@ function AddPlacePopup(props) {
 			isOpen={isOpen}
 			onClose={onClose}
 			onSubmit={handleSubmit}
+			isLoading={isLoading}
 		>
 			(
 			<input id="title-input" type="text" ref={inputTitle} name="title" placeholder="Название" required

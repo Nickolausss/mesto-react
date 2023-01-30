@@ -3,7 +3,7 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 import PopupWithForm from './PopupWithForm';
 
 function EditProfilePopup(props) {
-	const { isOpen, onClose, onUpdateUser } = props;
+	const { isOpen, onClose, onUpdateUser, onChangeSavingButton, isLoading } = props;
 	const currentUser = useContext(CurrentUserContext);
 
 	const [name, setName] = useState('');
@@ -19,6 +19,7 @@ function EditProfilePopup(props) {
 
 	function handleSubmit(e) {
 		e.preventDefault();
+		onChangeSavingButton(true);
 
 		onUpdateUser({
 			name: name,
@@ -34,6 +35,7 @@ function EditProfilePopup(props) {
 			isOpen={isOpen}
 			onClose={onClose}
 			onSubmit={handleSubmit}
+			isLoading={isLoading}
 		>
 			(
 			<input id="name-input" type="text" value={name || ''} onChange={handleNameChange} name="name" placeholder="Ваше имя" required

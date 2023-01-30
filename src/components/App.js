@@ -24,6 +24,8 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     Promise.all([api.getProfileInfo(), api.getInitialCards()])
       .then(([userData, cards]) => {
@@ -87,6 +89,9 @@ function App() {
       .catch(err => {
         console.log(`Ошибка в методе editProfileInfo: ${err}`);
       })
+      .finally(() => {
+        renderLoading(false);
+      })
   };
 
   function handleUpdateAvatar(data) {
@@ -97,6 +102,9 @@ function App() {
       })
       .catch(err => {
         console.log(`Ошибка в методе changeAvatar: ${err}`);
+      })
+      .finally(() => {
+        renderLoading(false);
       })
   };
 
@@ -109,7 +117,18 @@ function App() {
       .catch(err => {
         console.log(`Ошибка в методе addNewCard: ${err}`);
       })
+      .finally(() => {
+        renderLoading(false);
+      })
   };
+
+  function renderLoading(state) {
+    if (state) {
+      setIsLoading(true);
+    } else {
+      setIsLoading(false);
+    }
+  }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -132,16 +151,22 @@ function App() {
           isOpen={isEditProfilePopupOpen && 'popup_opened'}
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
+          onChangeSavingButton={renderLoading}
+          isLoading={isLoading}
         />
         <AddPlacePopup
           isOpen={isAddPlacePopupOpen && 'popup_opened'}
           onClose={closeAllPopups}
           onAddPlace={handleAddPlaceSubmit}
+          onChangeSavingButton={renderLoading}
+          isLoading={isLoading}
         />
         <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen && 'popup_opened'}
           onClose={closeAllPopups}
           onUpdateAvatar={handleUpdateAvatar}
+          onChangeSavingButton={renderLoading}
+          isLoading={isLoading}
         />
         <PopupWithForm
           title="Вы уверены?"
