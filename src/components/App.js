@@ -26,6 +26,8 @@ function App() {
 
   const [isLoading, setIsLoading] = useState(false);
 
+  const isOpen = isEditProfilePopupOpen || isAddPlacePopupOpen || isEditAvatarPopupOpen || isImagePopupOpen;
+
   useEffect(() => {
     Promise.all([api.getProfileInfo(), api.getInitialCards()])
       .then(([userData, cards]) => {
@@ -38,6 +40,21 @@ function App() {
         console.log(`Ошибка в Promise.all: getProfileInfo, getInitialCards: ${err}`);
       })
   }, []);
+
+  useEffect(() => {
+    function closeByEscape(e) {
+      if (e.key === 'Escape') {
+        closeAllPopups();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('keydown', closeByEscape);
+      return () => {
+        document.removeEventListener('keydown', closeByEscape);
+      }
+    }
+  }, [isOpen]);
 
   const openEditProfilePopup = () => setIsEditProfilePopupOpen(true);
   const openAddPlacePopupOpen = () => setIsAddPlacePopupOpen(true);
