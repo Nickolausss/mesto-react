@@ -1,4 +1,6 @@
-import { useState, useEffect, useContext } from 'react';
+import { useEffect, useContext } from 'react';
+import { useForm } from '../hooks/useForm.js';
+
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 import PopupWithForm from './PopupWithForm';
 
@@ -6,16 +8,15 @@ function EditProfilePopup(props) {
 	const { isOpen, onClose, onUpdateUser, onChangeSavingButton, isLoading } = props;
 	const currentUser = useContext(CurrentUserContext);
 
-	const [name, setName] = useState('');
-	const [description, setDescription] = useState('');
+	const { values, handleChange, setValues } = useForm({});
+	const { name, description } = values;
 
 	useEffect(() => {
-		setName(currentUser.name);
-		setDescription(currentUser.about);
+		setValues({
+			name: currentUser.name,
+			description: currentUser.about
+		});
 	}, [currentUser, isOpen]);
-
-	const handleNameChange = e => setName(e.target.value);
-	const handleDescriptionChange = e => setDescription(e.target.value);
 
 	function handleSubmit(e) {
 		e.preventDefault();
@@ -38,10 +39,10 @@ function EditProfilePopup(props) {
 			isLoading={isLoading}
 		>
 			(
-			<input id="name-input" type="text" value={name || ''} onChange={handleNameChange} name="name" placeholder="Ваше имя" required
+			<input id="name-input" type="text" value={name || ''} onChange={handleChange} name="name" placeholder="Ваше имя" required
 				className="popup__item popup__item_input_name" minLength="2" maxLength="40" />
 			<span className="name-input-error popup__item-error"></span>
-			<input id="description-input" type="text" value={description || ''} onChange={handleDescriptionChange} name="description" placeholder="Род деятельности" required
+			<input id="description-input" type="text" value={description || ''} onChange={handleChange} name="description" placeholder="Род деятельности" required
 				className="popup__item popup__item_input_description" minLength="2" maxLength="200" />
 			<span className="description-input-error popup__item-error"></span>
 			)
