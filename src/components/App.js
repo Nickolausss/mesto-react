@@ -148,21 +148,21 @@ function App() {
         />
         <Footer />
         <EditProfilePopup
-          isOpen={isEditProfilePopupOpen && 'popup_opened'}
+          isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
           onChangeSavingButton={renderLoading}
           isLoading={isLoading}
         />
         <AddPlacePopup
-          isOpen={isAddPlacePopupOpen && 'popup_opened'}
+          isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
           onAddPlace={handleAddPlaceSubmit}
           onChangeSavingButton={renderLoading}
           isLoading={isLoading}
         />
         <EditAvatarPopup
-          isOpen={isEditAvatarPopupOpen && 'popup_opened'}
+          isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
           onUpdateAvatar={handleUpdateAvatar}
           onChangeSavingButton={renderLoading}
@@ -171,14 +171,11 @@ function App() {
         <PopupWithForm
           title="Вы уверены?"
           name="confir-delete"
-        >
-          (
-          <button type="button" className="popup__save-button">Да</button>
-          )
-        </PopupWithForm>
+          buttonText="Да"
+        />
         <ImagePopup
           card={selectedCard}
-          isOpen={isImagePopupOpen && 'popup_opened'}
+          isOpen={isImagePopupOpen}
           onClose={closeAllPopups}
         />
       </div>
