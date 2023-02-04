@@ -11,6 +11,8 @@ function Main(props) {
 		onAddPlace,
 		onEditAvatar,
 		onImage,
+		onDeleteConfirm,
+		onCardDeleteClick,
 		onCardClick,
 		onCardLike,
 		onCardDelete,
@@ -38,10 +40,12 @@ function Main(props) {
 				{cards.map(card => (
 					<Card key={card._id}
 						card={card}
+						onCardDeleteClick={onCardDeleteClick}
 						onCardClick={onCardClick}
 						onCardLike={onCardLike}
 						onCardDelete={onCardDelete}
 						onImage={onImage}
+						onDeleteConfirm={onDeleteConfirm}
 					/>
 				))}
 			</section>

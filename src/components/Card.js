@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 
 function Card(props) {
-	const { card, onCardClick, onCardLike, onCardDelete, onImage } = props;
+	const { card, onCardDeleteClick, onCardClick, onCardLike, onImage, onDeleteConfirm } = props;
 	const currentUser = useContext(CurrentUserContext);
 
 	const isOwn = card.owner._id === currentUser._id;
@@ -17,7 +17,10 @@ function Card(props) {
 		onImage();
 		onCardClick(card);
 	};
-	const handleDeleteClick = () => onCardDelete(card._id);
+	const handleDeleteClick = () => {
+		onDeleteConfirm();
+		onCardDeleteClick(card._id);
+	};
 
 	return (
 		<article className="element">
