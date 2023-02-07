@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useForm } from '../hooks/useForm';
 import PopupWithForm from './PopupWithForm';
 
@@ -7,6 +8,10 @@ function AddPlacePopup(props) {
 	const { values, handleChange, setValues } = useForm({});
 	const { title, place } = values;
 
+	useEffect(() => {
+		setValues({});
+	}, [isOpen]);
+
 	function handleSubmit(e) {
 		e.preventDefault();
 		onChangeSavingButton(true);
@@ -15,8 +20,6 @@ function AddPlacePopup(props) {
 			name: title,
 			link: place
 		});
-
-		setValues({});
 	}
 
 	return (

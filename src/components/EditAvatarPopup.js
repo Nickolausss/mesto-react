@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useForm } from '../hooks/useForm';
 import PopupWithForm from './PopupWithForm';
 
@@ -7,6 +8,10 @@ function EditAvatarPopup(props) {
 	const { values, handleChange, setValues } = useForm({});
 	const { avatar } = values;
 
+	useEffect(() => {
+		setValues({});
+	}, [isOpen]);
+
 	function handleSubmit(e) {
 		e.preventDefault();
 		onChangeSavingButton(true);
@@ -14,8 +19,6 @@ function EditAvatarPopup(props) {
 		onUpdateAvatar({
 			avatar: avatar,
 		});
-
-		setValues({});
 	};
 
 	return (
